@@ -17,7 +17,7 @@ Deno.serve(async (req) => {
     const pay = await fetch("https://api.mercadopago.com/v1/payments/" + encodeURIComponent(pid), {
       headers: { Authorization: "Bearer " + token },
     }).then((r) => r.json());
-    if (pay && pay.status === "approved" && pay.external_reference && Number(pay.transaction_amount) >= 9.9) {
+    if (pay && pay.status === "approved" && pay.external_reference && Number(pay.transaction_amount) >= ((pay.metadata && pay.metadata.tipo === "irmao") ? 4.9 : 9.9)) {
       await fetch(`${SB_URL}/rest/v1/noel_pedidos?on_conflict=slug`, {
         method: "POST",
         headers: {

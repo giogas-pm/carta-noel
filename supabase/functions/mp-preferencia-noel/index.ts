@@ -18,13 +18,21 @@ Deno.serve(async (req) => {
   try {
     const token = Deno.env.get("MP_ACCESS_TOKEN");
     if (!token) return json({ ok: false, motivo: "sem_token" });
-    const { slug, titulo } = await req.json().catch(() => ({} as any));
+    const { slug, tipo, pai } = await req.json().catch(() => ({} as any));
+    // carta extra (irmão/primo) por R$4,90 só se o pedido "pai" já foi pago
+    let preco = PRECO, irmao = false;
+    if (tipo === "irmao" && pai) {
+      const ok = await fetch(`https://${REF}.supabase.co/rest/v1/noel_pedidos?slug=eq.${encodeURIComponent(pai)}&unlocked=eq.true&select=slug`, {
+        headers: { apikey: Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, Authorization: "Bearer " + Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")! },
+      }).then((r) => r.json()).catch(() => []);
+      if (Array.isArray(ok) && ok.length) { preco = 4.9; irmao = true; }
+    }
     if (!slug) return json({ ok: false, motivo: "sem_slug" });
-    const nome = "Carta personalizada do Papai Noel";
+    const nome = irmao ? "Carta extra do Papai Noel (irmão/primo)" : "Carta personalizada do Papai Noel";
     const pref = {
-      items: [{ title: nome, quantity: 1, unit_price: PRECO, currency_id: "BRL" }],
+      items: [{ title: nome, quantity: 1, unit_price: preco, currency_id: "BRL" }],
       external_reference: String(slug),
-      metadata: { slug: String(slug) },
+      metadata: { slug: String(slug), tipo: irmao ? "irmao" : "carta" },
       statement_descriptor: "CARTANOEL",
       notification_url: WEBHOOK_URL,
       back_urls: {
