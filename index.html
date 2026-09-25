@@ -68,6 +68,18 @@
   .sign .t{font:italic 500 15px 'Cormorant Garamond',serif}
   .ps{position:absolute;left:0;right:0;bottom:0;font:italic 500 17px/1.4 'Cormorant Garamond',serif;border-top:1px dashed rgba(199,154,59,.7);padding-top:8px}
   .stamp{position:absolute;left:4px;bottom:84px;transform:rotate(-12deg);border:3px double var(--green);color:var(--green);border-radius:10px;padding:6px 12px;text-align:center;font:800 13px Nunito,sans-serif;letter-spacing:1px;opacity:.85}
+  .kit .cut{border:2px dashed #c9b28a;border-radius:12px;position:relative;background:rgba(255,255,255,.35)}
+  .kit .env{height:430px;text-align:center;padding:30px 40px}
+  .kit .envs svg{width:100px;height:100px}.kit .envs{position:absolute;right:28px;top:22px}
+  .kit .envf{font:600 18px 'Cormorant Garamond',serif;letter-spacing:3px;text-transform:uppercase;color:var(--red2);text-align:left}
+  .kit .envt{font-family:'Great Vibes',cursive;font-size:64px;margin:100px 0 6px;color:var(--ink)}
+  .kit .enva{font:italic 500 20px 'Cormorant Garamond',serif}.kit .envp{position:absolute;left:0;right:0;bottom:22px;font:700 13px Nunito,sans-serif;letter-spacing:2px;color:var(--green)}
+  .kit .row2{display:grid;grid-template-columns:1.4fr 1fr;gap:22px;margin-top:26px}
+  .kit .rena{padding:22px 24px;height:420px}.kit .rt{font-family:'Great Vibes',cursive;font-size:40px;color:var(--red2)}
+  .kit .rena p{font:500 21px/1.5 'Cormorant Garamond',serif}.kit .rs{font-family:'Great Vibes',cursive;font-size:44px;text-align:right;color:var(--red2)}
+  .kit .tags{display:grid;gap:22px}.kit .tag{height:199px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;font-size:34px}
+  .kit .tag b{font:700 24px/1.2 'Cormorant Garamond',serif;margin-top:6px}.kit .tag small{font:italic 500 16px 'Cormorant Garamond',serif;margin-top:6px}
+  .kit .kh{text-align:center;font:600 13px Nunito,sans-serif;color:var(--muted);margin-top:22px}
   .cert{text-align:center}
   .cert .ct{font-family:'Great Vibes',cursive;font-size:64px;color:var(--red2);margin:40px 0 0}
   .cert .cs{font:600 18px 'Cormorant Garamond',serif;letter-spacing:3px;text-transform:uppercase;color:var(--green)}
@@ -149,7 +161,7 @@
       <div class="unpaid">
         <button class="btn btn-red w100 mob" onclick="abrirLeitura()">👀 Ver a carta</button>
         <button class="btn btn-red w100 desk" onclick="comprar()">🎁 Liberar pra imprimir — R$9,90</button>
-        <p class="price">Carta + certificado em A4 · sem marca d'água · Pix ou cartão via Mercado Pago · pagamento único<br>Produto digital pra imprimir em casa — nada vai pelo correio. No extrato aparece CARTANOEL.</p>
+        <p class="price">Carta + certificado + kit de envelope e bilhete da rena, em A4 · sem marca d'água · Pix ou cartão via Mercado Pago · pagamento único<br>Produto digital pra imprimir em casa — nada vai pelo correio. No extrato aparece CARTANOEL.</p>
       </div>
       <div class="paid">
         <button class="btn btn-red w100" onclick="imprimir()">🖨️ Imprimir / salvar PDF</button>
@@ -162,7 +174,7 @@
 
   <section>
     <div class="stage" id="stage"><div class="fit" id="fit"><div id="pages"></div></div></div>
-    <p class="price unpaid">Prévia grátis ao vivo · a versão liberada sai sem a marca "PRÉVIA"</p>
+    <p class="price unpaid">Prévia grátis ao vivo: carta, certificado e kit pra recortar · a versão liberada sai sem a marca "PRÉVIA"</p>
   </section>
 </main>
 
@@ -170,7 +182,7 @@
   <h2>Como funciona</h2>
   <div class="card"><b>1. Conte pro Noel</b> — nome, idade, o que pediu e as conquistas do ano. Nada disso é enviado pra nenhum servidor: a carta é montada no seu próprio aparelho.</div>
   <div class="card"><b>2. Veja a prévia</b> — a carta aparece na hora, com texto único (não é um modelo igual pra todo mundo).</div>
-  <div class="card"><b>3. Libere e imprima</b> — R$9,90, pagamento único. Imprima em papel A4 (fica lindo em papel pólen ou kraft) ou salve em PDF. Vem junto o <b>Certificado de Bom Comportamento</b>.</div>
+  <div class="card"><b>3. Libere e imprima</b> — R$9,90, pagamento único. Imprima em papel A4 (fica lindo em papel pólen ou kraft) ou salve em PDF. Vem junto o <b>Certificado de Bom Comportamento</b> e um <b>kit pra recortar</b>: cartão de envelope do "Correio Expresso do Polo Norte", bilhete da rena Faísca e etiquetas "Não abrir antes do dia 25".</div>
   <h2>Dicas pra deixar a magia ainda maior</h2>
   <div class="card">Dobre a carta em três, coloque num envelope com o nome da criança e deixe perto da árvore ou da janela na manhã de 25. Um pouco de glitter dourado ou uma marca de "pegada de bota" com farinha no chão fazem o resto. 😉</div>
   <h2>Perguntas frequentes</h2>
@@ -184,7 +196,7 @@
 <div id="printArea"><p style="font:20px sans-serif;text-align:center;margin-top:40vh">Libere a carta para imprimir 🎅</p></div>
 <div class="bar mob unpaid" id="bar"><button class="btn btn-red w100" onclick="abrirLeitura()" id="barBtn">👀 Ver a carta</button></div>
 <div class="rd" id="rd" onclick="if(event.target===this)fecharLeitura()"><div class="rdc"><button class="x" onclick="fecharLeitura()">×</button><div id="rdBody"></div><div class="wm"></div>
-  <div class="unpaid" style="margin-top:14px"><button class="btn btn-red w100" onclick="comprar()">🎁 Liberar pra imprimir — R$9,90</button><p class="price">Sai sem a marca "PRÉVIA", em A4, com o certificado. Pix ou cartão.</p></div></div></div>
+  <div class="unpaid" style="margin-top:14px"><button class="btn btn-red w100" onclick="comprar()">🎁 Liberar pra imprimir — R$9,90</button><p class="price">Sai sem a marca "PRÉVIA", em A4, com certificado e kit de envelope. Pix ou cartão.</p></div></div></div>
 <div class="toast" id="toast"></div>
 
 <script>
@@ -280,7 +292,13 @@ function pagesHTML(){
     <p style="margin-top:34px">O Papai Noel e o Conselho dos Duendes do Polo Norte certificam que</p>
     <div class="cn">${nome}</div>
     <p>está oficialmente na <b>Lista dos Bem-Comportados</b>, ${motivo}.</p>
-    <div class="sigs"><div><b>Papai Noel</b>Papai Noel</div><div><b>Duende Chefe</b>Duende Chefe da Oficina</div></div></div><div class="wm"></div></div>`;
+    <div class="sigs"><div><b>Papai Noel</b>Papai Noel</div><div><b>Duende Chefe</b>Duende Chefe da Oficina</div></div></div><div class="wm"></div></div>
+  <div class="page kit"><div class="inner" style="inset:40px 46px">
+    <div class="cut env"><div class="envs">${SEAL}</div><div class="envf">Correio Expresso do Polo Norte</div><div class="envt">Para: <span>${nome}</span></div><div class="enva">${D.cidade.trim()?esc(D.cidade.trim())+' · ':''}Brasil — entrega especial de Natal</div><div class="envp">✦ urgente · não amassar · via trenó ✦</div></div>
+    <div class="row2"><div class="cut rena"><div class="rt">Um recado da Faísca 🦌</div><p>Oi, ${nome}! Eu sou a Faísca, a rena mais novinha do Papai Noel. Obrigada pela água e pelo lanchinho — voei muito mais rápido depois deles! Até o ano que vem!</p><div class="rs">Faísca</div></div>
+    <div class="tags"><div class="cut tag">🎁<b>Não abrir antes<br>do dia 25!</b><small>— P. Noel</small></div><div class="cut tag">🎄<b>Para ${nome}</b><small>com amor, do Polo Norte</small></div></div></div>
+    <p class="kh">✂️ Recorte nas linhas tracejadas · cole o cartão do envelope num envelope comum ou dobre a carta em três</p>
+  </div><div class="wm"></div></div>`;
 }
 let FS=20.5;
 function autoFit(){const pg=document.querySelector('#pages .page');if(!pg)return;const b=pg.querySelector('.body'),st=pg.querySelector('.stamp');FS=20.5;b.style.setProperty('--fs',FS+'px');
@@ -294,7 +312,7 @@ function render(){
   document.getElementById('pages').classList.toggle('unlocked',UNLOCKED);
   fit();
 }
-function fit(){const st=document.getElementById('stage'),f=document.getElementById('fit');const w=st.clientWidth-28;const s=Math.min(1,w/794);f.style.transform='scale('+s+')';f.style.height=(f.scrollHeight*s)+'px';st.style.height=(2*1123+18)*s+28+'px'}
+function fit(){const st=document.getElementById('stage'),f=document.getElementById('fit');const w=st.clientWidth-28;const s=Math.min(1,w/794);f.style.transform='scale('+s+')';f.style.height=(f.scrollHeight*s)+'px';const np=document.querySelectorAll('#pages .page').length||2;st.style.height=(np*1123+(np-1)*18)*s+28+'px'}
 window.addEventListener('resize',fit);
 
 function abrirLeitura(){
