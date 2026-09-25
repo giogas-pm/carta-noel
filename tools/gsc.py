@@ -72,3 +72,13 @@ elif ACTION == "query":
     end = datetime.date.today(); start = end - datetime.timedelta(days=28)
     body = {"startDate": str(start), "endDate": str(end), "dimensions": ["page"], "rowLimit": 50}
     show(requests.post("https://www.googleapis.com/webmasters/v3/sites/%s/searchAnalytics/query" % enc, headers=H, data=json.dumps(body)))
+
+elif ACTION == "inspect":
+    url = sys.argv[4]
+    r = requests.post("https://searchconsole.googleapis.com/v1/urlInspection/index:inspect", headers=H,
+                      data=json.dumps({"inspectionUrl": url, "siteUrl": SITE}))
+    try:
+        ix = r.json()["inspectionResult"]["indexStatusResult"]
+        print(url.split(".io")[1], "|", ix.get("coverageState"), "| rastreado:", ix.get("lastCrawlTime", "nunca"))
+    except Exception:
+        show(r)

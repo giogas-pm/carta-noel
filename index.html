@@ -59,7 +59,7 @@
   .lh .date{font:italic 500 17px 'Cormorant Garamond',serif}
   .seal{width:86px;height:86px}
   .greet{font-family:'Great Vibes',cursive;font-size:48px;color:var(--red2);margin:22px 0 6px}
-  .body p{font:500 20.5px/1.55 'Cormorant Garamond',serif;margin:0 0 13px;text-align:justify}
+  .body p{font:500 var(--fs,20.5px)/1.55 'Cormorant Garamond',serif;margin:0 0 13px;text-align:justify}
   .sign{position:absolute;right:0;bottom:74px;text-align:center}
   .sign .s{font-family:'Great Vibes',cursive;font-size:58px;color:var(--red2);line-height:1}
   .sign .t{font:italic 500 15px 'Cormorant Garamond',serif}
@@ -201,7 +201,7 @@ function carta(){
     `Que alegria receber notícias suas! Aqui no Polo Norte está nevando sem parar, a fábrica de brinquedos não para, e mesmo assim eu parei tudo pra te escrever esta cartinha.`,
     `A Mamãe Noel acabou de me trazer um chocolate quente e eu aproveitei pra sentar na minha poltrona preferida e responder você. Guardei esse momento especialmente pra isso.`];
   let a=pick(r,aberturas);
-  if(!isNaN(idade)&&idade>0)a+=` Nem acredito que você já está com ${idade} ano${idade>1?'s':''}, ${g('tão grand@')}!`;
+  if(!isNaN(idade)&&idade>0)a+=` Nem acredito que você já está com ${idade} ano${idade>1?'s':''}, tão grande!`;
   if(D.cidade.trim())a+=` Fiquei de olho em ${esc(D.cidade.trim())} o ano inteiro pelo meu telescópio mágico.`;
   p.push(a);
   const bons=D.bom.map(g).concat(D.bomOutro.trim()?[esc(D.bomOutro.trim())]:[]).slice(0,4);
@@ -213,7 +213,7 @@ function carta(){
   } else {
     p.push(pick(r,[`Os duendes me contaram que você foi uma criança de coração muito bom este ano, e isso é o que mais importa pra mim.`,`Eu acompanhei o seu ano inteirinho e vi o seu esforço, o seu carinho e as suas risadas. Estou muito orgulhoso de você.`]));
   }
-  if(D.recado.trim())p.push(`E tem mais: alguém que te ama muito me contou em segredo que ${esc(D.recado.trim().replace(/\.$/,''))}. Isso me deixou com um sorriso enorme debaixo da barba!`);
+  if(D.recado.trim())p.push(`E tem mais: alguém que te ama muito me contou um segredo: “${esc(D.recado.trim().replace(/\.$/,''))}”. Isso me deixou com um sorriso enorme debaixo da barba!`);
   const pres=esc(D.presente.trim());
   if(pres&&D.prom==='sim')p.push(pick(r,[`Sobre o seu pedido: ${pres}. Já conversei com o chefe dos duendes e ele me garantiu que está tudo encaminhado. O Rodolfo está treinando pra voar bem rápido na noite de Natal!`,`E aquele pedido especial, ${pres}? Pode ficar tranquil${o}: ele já está na lista do trenó, com um laço bem caprichado.`]));
   else if(pres&&D.prom==='talvez')p.push(pick(r,[`Anotei direitinho o seu pedido: ${pres}. Os duendes estão trabalhando muito e eu vou fazer todo o possível. E lembre: o melhor presente do Natal é estar junto de quem a gente ama.`,`Sobre ${pres}: eu levei o seu pedido pra oficina e vou fazer o meu melhor. Às vezes a magia prepara surpresas diferentes, mas sempre cheias de amor.`]));
@@ -228,10 +228,10 @@ const SEAL=`<svg class="seal" viewBox="0 0 100 100"><circle cx="50" cy="50" r="4
 function pagesHTML(){
   const c=carta(), nome=esc(D.nome.trim()||'Criança'), ano=new Date().getFullYear();
   const bons=D.bom.map(g).slice(0,2);
-  const motivo=bons.length?`por ter ${bons.map(b=>b.replace(/^(foi|fez|aprendeu|cuidou|comeu|dividiu|largou|arrumou|ajudou)\b/,m=>({foi:'sido',fez:'feito',aprendeu:'aprendido',cuidou:'cuidado',comeu:'comido',dividiu:'dividido',largou:'largado',arrumou:'arrumado',ajudou:'ajudado'}[m]))).join(' e ')}`:'pelo coração bondoso demonstrado durante todo o ano';
+  const motivo=bons.length?`por ter ${bons.map(b=>b.replace(/^foi bem\b/,'ido bem').replace(/^(foi|fez|aprendeu|cuidou|comeu|dividiu|largou|arrumou|ajudou)\b/,m=>({foi:'sido',fez:'feito',aprendeu:'aprendido',cuidou:'cuidado',comeu:'comido',dividiu:'dividido',largou:'largado',arrumou:'arrumado',ajudou:'ajudado'}[m]))).join(' e ')}`:'pelo coração bondoso demonstrado durante todo o ano';
   return `<div class="page"><div class="frame"></div><span class="corner" style="left:34px;top:30px">❄️</span><span class="corner" style="right:34px;top:30px">❄️</span>
     <div class="inner"><div class="lh"><div><div class="from">Do escritório do Papai Noel</div><div class="date">${hoje()}</div></div>${SEAL}</div>
-    <div class="greet">${c.greet}</div><div class="body">${c.paras.map(x=>`<p>${x}</p>`).join('')}</div>
+    <div class="greet">${c.greet}</div><div class="body" style="--fs:${FS}px">${c.paras.map(x=>`<p>${x}</p>`).join('')}</div>
     <div class="stamp">✔ LISTA DOS<br>BEM-COMPORTADOS<br>${ano}</div>
     <div class="sign"><div class="t">Com todo o meu carinho,</div><div class="s">Papai Noel</div></div>
     <div class="ps">${c.ps}</div></div><div class="wm"></div></div>
@@ -242,8 +242,11 @@ function pagesHTML(){
     <p>está oficialmente na <b>Lista dos Bem-Comportados</b>, ${motivo}.</p>
     <div class="sigs"><div><b>Papai Noel</b>Papai Noel</div><div><b>Duende Chefe</b>Duende Chefe da Oficina</div></div></div><div class="wm"></div></div>`;
 }
+let FS=20.5;
+function autoFit(){const pg=document.querySelector('#pages .page');if(!pg)return;const b=pg.querySelector('.body'),st=pg.querySelector('.stamp');FS=20.5;b.style.setProperty('--fs',FS+'px');
+  while(FS>13&&b.offsetTop+b.offsetHeight>st.offsetTop-14){FS-=0.5;b.style.setProperty('--fs',FS+'px')}}
 function render(){
-  document.getElementById('pages').innerHTML=pagesHTML();
+  document.getElementById('pages').innerHTML=pagesHTML();autoFit();
   document.getElementById('appRoot').classList.toggle('unlocked',UNLOCKED);
   document.getElementById('pages').classList.toggle('unlocked',UNLOCKED);
   fit();
@@ -304,7 +307,7 @@ function salvarLink(){const u=linkCarta();try{navigator.clipboard.writeText(u);t
 
 /* ---------- boot ---------- */
 load();bindForm();render();
-document.fonts&&document.fonts.ready.then(fit);
+document.fonts&&document.fonts.ready.then(()=>{autoFit();fit()});
 (async()=>{
   try{const q=new URLSearchParams(location.search);const src=q.get('src');track(src==='seo'?'seo_land':'visit',{src:src||null})}catch(_){}
   if(!UNLOCKED&&!new URLSearchParams(location.search).get('pago')&&await status()){UNLOCKED=true;try{localStorage.setItem('noel_ok_'+SLUG,'1')}catch(_){}render()}
