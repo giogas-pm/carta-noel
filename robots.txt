@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://giogas-pm.github.io/carta-noel/sitemap.xml
